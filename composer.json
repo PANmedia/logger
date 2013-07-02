@@ -6,14 +6,12 @@
     "license": "MIT",
     "require": {
         "php": ">=5.4",
-        "filp/whoops": "1.*",
-        "monolog/monolog": "1.5.*",
-        "mlehner/gelf-php": "1.*"
+        "monolog/monolog": "1.5.*"
     },
     "authors": [
         {
             "name": "Phil Bennett",
-            "email": "philipobenito@gmail.com"
+            "email": "phil.bennett@videogamer.com"
         }
     ],
     "autoload": {
