@@ -266,7 +266,7 @@ class Console
      * Provide an object an method name to invoke that will return a key => value array
      *
      * @param string        $name
-     * @param object|string $object - the class/object that handles sessions
+     * @param object|string $object - the class/object that handles key => value data
      * @param string        $method - the method to retrieve all key => value pairs
      */
     public function setKeyValueHandler($name, $object, $method)
