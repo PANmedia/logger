@@ -70,7 +70,7 @@ class Console
      * Start a timer
      * 
      * @param  string $key
-     * @return \PHProfilr\Console
+     * @return \ProG\Logger\Console
      */
     public function start($key)
     {
@@ -84,7 +84,7 @@ class Console
      *
      * @throws \InvalidArgumentException
      * @param  string $key
-     * @return \PHProfilr\Console
+     * @return \ProG\Logger\Console
      */
     public function stop($key)
     {
@@ -109,7 +109,7 @@ class Console
      * Start a memory measurement
      * 
      * @param  string $key
-     * @return \PHProfilr\Console
+     * @return \ProG\Logger\Console
      */
     public function startMemory($key)
     {
@@ -123,7 +123,7 @@ class Console
      *
      * @throws \InvalidArgumentException
      * @param  string $key
-     * @return \PHProfilr\Console
+     * @return \ProG\Logger\Console
      */
     public function stopMemory($key)
     {
@@ -152,7 +152,7 @@ class Console
      * @param  string $sql    
      * @param  array  $params 
      * @param  array  $types  
-     * @return \PHProfilr\Console       
+     * @return \ProG\Logger\Console       
      */
     public function startQuery($sql, array $params = [], array $types = [])
     {
