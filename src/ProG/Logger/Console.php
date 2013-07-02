@@ -214,7 +214,7 @@ class Console
     /**
      * Run as query finishes
      * 
-     * @return \PHProfiler\Console
+     * @return \ProG\Logger\Console
      */
 
     public function stopQuery()
