@@ -2,6 +2,8 @@
 
 namespace ProG\Logger\Profiler;
 
+use ProG\Logger\ConsoleInjectionTrait;
+
 class JsonProfiler implements ProfilerInterface
 {
     /**
@@ -33,12 +35,6 @@ class JsonProfiler implements ProfilerInterface
             );
         }
 
-        $json['profiler'] = [
-            'queries'             => $this->console->getQueries(),
-            'timers'              => $this->console->getTimers(),
-            'memory_measurements' => $this->console->getMemoryMeasurements()
-        ];
-
         $this->json = $json;
 
         return $this;
@@ -49,6 +45,10 @@ class JsonProfiler implements ProfilerInterface
      */
     public function render()
     {
-        return json_encode($this->json);
+        $json['profiler'] = $this->console->getDebugData();
+
+        return json_encode(
+            array_merge((array) $this->json, $json)
+        );
     }
 }

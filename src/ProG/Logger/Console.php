@@ -13,24 +13,39 @@ class Console
     protected $logger;
 
     /**
+     * PDO instance to execute EXPLAIN queries if available
+     * 
      * @var \PDO
      */
     protected $database;
 
     /**
+     * Array of timers
+     * 
      * @var array
      */
     protected $timers = [];
 
     /**
+     * Array of memory measurements
+     * 
      * @var array
      */
     protected $memory = [];
 
     /**
+     * Array of queries and related debugging data
+     * 
      * @var array
      */
     protected $queries = [];
+
+    /**
+     * Array containing key => value handlers
+     * 
+     * @var array
+     */
+    protected $keyValueHandlers = [];
 
     /**
      * Constructor
@@ -42,6 +57,8 @@ class Console
     {
         $this->logger = $logger;
         $this->database = $database;
+
+        $this->timers['script_execution']['start'] = $_SERVER['REQUEST_TIME_FLOAT'];
     }
 
     /**
@@ -96,13 +113,25 @@ class Console
 
         $this->timers[$key]['stop'] = microtime(true);
 
-        $time = number_format($this->timers[$key]['stop'] - $this->timers[$key]['start'], 6);
+        $time = $this->getReadableTime($this->timers[$key]['start'], $this->timers[$key]['stop']);
+
+        $this->timers[$key]['time_seconds'] = $time;
 
         $this->getLogger()->info(
             sprintf('Timer: (%s) took %s seconds', $key, $time)
         );
 
         return $this;
+    }
+
+    /**
+     * Return all timers
+     * 
+     * @return array
+     */
+    public function getTimers()
+    {
+        return $this->timers;
     }
 
     /**
@@ -135,15 +164,23 @@ class Console
 
         $this->memory[$key]['stop'] = memory_get_usage();
 
-        $memory = round($this->memory[$key]['stop'] - $this->memory[$key]['start'], 2);
+        $this->memory[$key]['usage_kb'] = $this->getReadableMemory($this->memory[$key]['start'], $this->memory[$key]['stop']);
 
         $this->getLogger()->info(
-            sprintf('Memory: (%s) used %s kB of memory', $key, $memory)
+            sprintf('Memory: (%s) used %s kB of memory', $key, $this->memory[$key]['usage_kb'])
         );
 
-        $this->memory[$key]['stop'] = microtime(true);
-
         return $this;
+    }
+
+    /**
+     * Return all memory measurements
+     * 
+     * @return array
+     */
+    public function getMemoryMeasurements()
+    {
+        return $this->memory;
     }
 
     /**
@@ -190,34 +227,13 @@ class Console
         $this->queries[$key]['stop'] = microtime(true);
         $this->queries[$key]['mem_stop'] = memory_get_usage();
 
-        $this->queries[$key]['time_taken'] = number_format($this->queries[$key]['stop'] - $this->queries[$key]['start'], 6);
-        $mem = $this->queries[$key]['mem_stop'] - $this->queries[$key]['mem_start'];
-        $this->queries[$key]['memory_usage'] = round($mem / 1024, 2);
+        $this->queries[$key]['time_taken'] = $this->getReadableTime($this->queries[$key]['start'], $this->queries[$key]['stop']);
+        $this->queries[$key]['memory_usage'] = $this->getReadableMemory($this->queries[$key]['mem_start'], $this->queries[$key]['mem_stop']);;
 
         // clear out unwanted keys
         unset($this->queries[$key]['start'], $this->queries[$key]['stop'], $this->queries[$key]['mem_start'], $this->queries[$key]['mem_stop']);
 
         return $this;
-    }
-
-    /**
-     * Return all timers
-     * 
-     * @return array
-     */
-    public function getTimers()
-    {
-        return $this->timers;
-    }
-
-    /**
-     * Return all memory measurements
-     * 
-     * @return array
-     */
-    public function getMemoryMeasurements()
-    {
-        return $this->memory;
     }
 
     /**
@@ -228,5 +244,97 @@ class Console
     public function getQueries()
     {
         return $this->queries;
+    }
+
+    /**
+     * Returns an array of all included files and their file sizes
+     * 
+     * @return array
+     */
+    public function getIncludedFiles()
+    {
+        $return = [];
+
+        foreach (get_included_files() as $file) {
+            $return[$file] = round(filesize($file) / 1024, 2);
+        }
+
+        return $return;
+    }
+
+    /**
+     * Provide an object an method name to invoke that will return a key => value array
+     *
+     * @param string        $name
+     * @param object|string $object - the class/object that handles sessions
+     * @param string        $method - the method to retrieve all key => value pairs
+     */
+    public function setKeyValueHandler($name, $object, $method)
+    {
+        $this->keyValueHandlers[$name] = [
+            'object' => $object,
+            'method' => $method
+        ];
+    }
+
+    /**
+     * Invoke the method registered to retrieve session key => value pairs
+     * 
+     * @return array
+     */
+    protected function getKeyValueData()
+    {
+        if (empty($this->keyValueHandlers)) {
+            return [];
+        }
+
+        // TODO reflect on object and invoke method
+    }
+
+    /**
+     * Return a readable seconds float
+     * 
+     * @param  mixed $start 
+     * @param  mixed $stop  
+     * @return float        
+     */
+    public function getReadableTime($start, $stop)
+    {
+        return (float) number_format($stop - $start, 6);
+    }
+
+    /**
+     * Return a readable kB float
+     * 
+     * @param  mixed $start 
+     * @param  mixed $stop  
+     * @return float
+     */
+    public function getReadableMemory($start, $stop)
+    {
+        $mem = $stop - $start;
+
+        return round($mem / 1024, 2);
+    }
+
+    /**
+     * Return all debug data to be parsed by profiler
+     * 
+     * @return array
+     */
+    public function getDebugData()
+    {
+        $data = [
+            'queries'             => $this->console->getQueries(),
+            'timers'              => $this->console->getTimers(),
+            'memory_measurements' => $this->console->getMemoryMeasurements(),
+            'included_files'      => $this->console->getIncludedFiles()
+        ];
+
+        foreach ($this->getKeyValueData() as $key => $array) {
+            $data[$key] = $array;
+        }
+
+        return $data;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace ProG\Logger\Profiler;
 
+use ProG\Logger\ConsoleInjectionTrait;
+
 class PrettyProfiler implements ProfilerInterface
 {
     /**
