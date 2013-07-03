@@ -17,7 +17,7 @@ prog.profiler = (function () {
 #prog-profiler nav li.nav:hover { box-shadow: inset 0 0 3px #111; background: #333; }
 #prog-profiler nav a, #prog-profiler nav a:active, #prog-profiler nav a:visited, #prog-profiler nav a:hover { text-decoration: none; color: #efefef; }
 .prog-table-data { max-height: 500px; overflow: auto; background: #222; }
-.prog-table-data table { display: none; color: #222; font-family: Monaco, monospace; font-size: 11px; width: 100%; }
+.prog-table-data table { color: #222; font-family: Monaco, monospace; font-size: 11px; width: 100%; }
 .prog-table-data th { text-align: left; font-weight: normal; background: #B81F2F; padding: 10px; border-left: 1px solid #bb4b56; border-right: 1px solid #720914; border-bottom: 1px solid #720914; border-top: 1px solid #bb4b56; color: #fff; text-shadow: 1px 1px 0 #720914; }
 .prog-table-data td { background: #e8e8e8; padding: 10px; border-left: 1px solid #fff; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; border-top: 1px solid #fff; }
 .prog-table-data .query { width: 60%; }
@@ -30,13 +30,30 @@ prog.profiler = (function () {
             $('head').append(document.createElement('style'))
                      .find('style')
                      .append(this.css());
+
+            return this;
         },
         attachEvents: function () {
+            $('#prog-profiler nav a').on('click', this.open);
 
+            return this;
+        },
+        open: function (evt) {
+            var target = evt.target;
+            var table = 'prog-' + target.data('table') + '-table';
+
+            console.log(target);
+
+            target.closest('#prog-profiler').find('table').hide();
+            target.closest('#prog-profiler').find(table).show();
+
+            evt.preventDefault();
+            evt.stopPropagation();
         }
     };
 })();
 
 $(function () {
-    prog.profiler.injectCss();
+    prog.profiler.injectCss()
+                 .attachEvents();
 });

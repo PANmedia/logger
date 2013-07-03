@@ -4,7 +4,7 @@
             <ul>
                 <li class="logo">Pro-G Profiler</li>
                 <?php foreach (array_keys($data) as $section) : ?>
-                <a href="#" id="prog-section-<?= $section ?>">
+                <a href="#" id="prog-section-<?= $section ?>" data-table="<?= $section ?>">
                     <li class="nav">
                         <?= ucwords(str_replace(['-', '_'], ' ', $section)) ?>
                     </li>
@@ -17,7 +17,7 @@
         <?php foreach ($data as $section => $values) : ?>
             <?php switch ($section) : ?>
 <?php case 'queries': ?>
-        <table id="prog-queries-table" border="0" cellpadding="0" cellspacing="0">
+        <table id="prog-<?= $section ?>-table" border="0" cellpadding="0" cellspacing="0">
             <tr>
                 <th class="query">Query</th>
                 <th class="query-time">Time Taken</th>
@@ -45,7 +45,7 @@
         </table>
 <?php break ?>
 <?php case 'timers': ?>
-        <table id="prog-timers-table" border="0" cellpadding="0" cellspacing="0">
+        <table id="prog-<?= $section ?>-table" border="0" cellpadding="0" cellspacing="0">
             <tr>
                 <th class="timer">Timer</th>
                 <th class="timer-time">Time Taken</th>
@@ -59,7 +59,7 @@
         </table>
 <?php break ?>
 <?php case 'memory_measurements': ?>
-        <table id="prog-memory-table" border="0" cellpadding="0" cellspacing="0">
+        <table id="prog-<?= $section ?>-table" border="0" cellpadding="0" cellspacing="0">
             <tr>
                 <th class="memory">Memory Measurement</th>
                 <th class="memory-usage">Usage</th>
@@ -73,7 +73,7 @@
         </table>
 <?php break ?>
 <?php case 'included_files': ?>
-        <table id="prog-files-table" border="0" cellpadding="0" cellspacing="0">
+        <table id="prog-<?= $section ?>-table" border="0" cellpadding="0" cellspacing="0">
             <tr>
                 <th class="files">File</th>
                 <th class="files-size">Size</th>
@@ -87,7 +87,7 @@
         </table>
 <?php break ?>
 <?php case 'globals': ?>
-        <table id="prog-globals-table" border="0" cellpadding="0" cellspacing="0">
+        <table id="prog-<?= $section ?>-table" border="0" cellpadding="0" cellspacing="0">
             <tr>
                 <th class="globals">Global</th>
                 <th class="globals-key">Key</th>

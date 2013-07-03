@@ -330,9 +330,15 @@ class Console
             'memory_measurements' => $this->getMemoryMeasurements(),
             'included_files'      => $this->getIncludedFiles(),
             'globals'             => [
-                'get'   => $_GET,
-                'post'  => $_POST,
-                'files' => $_FILES
+                'get'     => (isset($_GET) && is_array($_GET)) ? $_GET : [],
+                'post'    => (isset($_POST) && is_array($_POST)) ? $_POST : [],
+                'files'   => (isset($_FILES) && is_array($_FILES)) ? $_FILES : [],
+                'session' => (isset($_SESSION) && is_array($_SESSION)) ? $_SESSION : [],
+                'cookie'  => (isset($_COOKIE) && is_array($_COOKIE)) ? $_COOKIE : [],
+                'request' => (isset($_REQUEST) && is_array($_REQUEST)) ? $_REQUEST : [],
+                'env'     => (isset($_ENV) && is_array($_ENV)) ? $_ENV : [],
+                'server'  => (isset($_SERVER) && is_array($_SERVER)) ? $_SERVER : [],
+                'http_response_header' => (isset($http_response_header) && is_array($http_response_header)) ? $http_response_header : []
             ]
         ];
 

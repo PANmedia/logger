@@ -66,4 +66,21 @@ class ConsoleTest extends \PHPUnit_Framework_Testcase
         $this->assertArrayHasKey('sql', $c->getQueries()[0]);
         $this->assertArrayHasKey('params', $c->getQueries()[0]);
     }
+
+    public function testGetIncludedFilesReturnsArray()
+    {
+        $logger = $this->getMock('Psr\Log\LoggerInterface');
+        $c = new Console($logger);
+        $files = $c->getIncludedFiles();
+        $this->assertInternalType('array', $files);
+        $this->assertArrayHasKey(__FILE__, $files);
+    }
+
+    public function testGetDebugDataReturnsArray()
+    {
+        $logger = $this->getMock('Psr\Log\LoggerInterface');
+        $c = new Console($logger);
+        $data = $c->getDebugData();
+        $this->assertInternalType('array', $data);
+    }
 }
