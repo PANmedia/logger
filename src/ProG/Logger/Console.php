@@ -288,7 +288,7 @@ class Console
             return [];
         }
 
-        // TODO reflect on object and invoke method
+        // TODO reflect on object and invoke method to create array
     }
 
     /**
@@ -300,7 +300,7 @@ class Console
      */
     public function getReadableTime($start, $stop)
     {
-        return (float) number_format($stop - $start, 6);
+        return (float) number_format($stop - $start, 4);
     }
 
     /**
@@ -325,10 +325,15 @@ class Console
     public function getDebugData()
     {
         $data = [
-            'queries'             => $this->console->getQueries(),
-            'timers'              => $this->console->getTimers(),
-            'memory_measurements' => $this->console->getMemoryMeasurements(),
-            'included_files'      => $this->console->getIncludedFiles()
+            'queries'             => $this->getQueries(),
+            'timers'              => $this->getTimers(),
+            'memory_measurements' => $this->getMemoryMeasurements(),
+            'included_files'      => $this->getIncludedFiles(),
+            'globals'             => [
+                'get'   => $_GET,
+                'post'  => $_POST,
+                'files' => $_FILES
+            ]
         ];
 
         foreach ($this->getKeyValueData() as $key => $array) {
