@@ -2,7 +2,7 @@
     <header>
         <nav>
             <ul>
-                <li class="logo">Pro-G Profiler</li>
+                <li class="logo">Creo Profiler</li>
                 <?php foreach (array_keys($data) as $section) : ?>
                 <a href="#" id="prog-section-<?= $section ?>" data-table="<?= $section ?>">
                     <li class="nav">
@@ -10,6 +10,9 @@
                     </li>
                 </a>
                 <?php endforeach ?>
+                <a href="#" class="prog-close-profiler">
+                    <li class="nav" style="display: none">X</li>
+                </a>
             </ul>
         </nav>
     </header>
