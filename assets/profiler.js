@@ -70,10 +70,10 @@ prog.profiler = (function () {
             var target = $(evt.currentTarget);
             var table = '#prog-' + target.data('table') + '-table';
 
-            target.closest('#prog-profiler').find('.prog-table-data').slideDown(350);
-            target.closest('#prog-profiler').find('table').hide();
-            target.closest('#prog-profiler').find(table).show();
-            target.closest('#prog-profiler').find('.prog-close-profiler li').fadeIn(350);
+            target.closest('#prog-profiler').find('.prog-table-data').slideDown(350).end()
+                                            .find('table').hide().end()
+                                            .find(table).show().end()
+                                            .find('.prog-close-profiler li').fadeIn(350);
 
             evt.preventDefault();
             evt.stopPropagation();
@@ -88,8 +88,7 @@ prog.profiler = (function () {
             var target = $(evt.currentTarget);
             target.closest('#prog-profiler').find('.prog-table-data').slideUp(350, function () {
                 target.closest('#prog-profiler').find('table').hide();
-            });
-            target.closest('#prog-profiler').find('.prog-close-profiler li').fadeOut(350);
+            }).end().find('.prog-close-profiler li').fadeOut(350);
 
             evt.preventDefault();
             evt.stopPropagation();
