@@ -20,5 +20,8 @@
             "ProG\\Logger": "src/"
         }
     },
+    "suggest": {
+        "doctrine/orm": "Enable logging of Doctrine queries"
+    },
     "minimum-stability": "dev"
 }

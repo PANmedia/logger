@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
   <meta charset="UTF-8">
-  <title>Code Coverage for /Users/pbenn/dev/phprofilr/src/ProG/Logger/Profiler/ProfilerInterface.php</title>
+  <title>Code Coverage for /Users/pbenn/dev/phprofilr/src/ProG/Logger/DoctrineAwareConsole.php</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
@@ -18,8 +18,7 @@
      <div class="span12">
       <ul class="breadcrumb">
         <li><a href="index.html">/Users/pbenn/dev/phprofilr/src/ProG/Logger</a> <span class="divider">/</span></li>
-        <li><a href="Profiler.html">Profiler</a> <span class="divider">/</span></li>
-        <li class="active">ProfilerInterface.php</li>
+        <li class="active">DoctrineAwareConsole.php</li>
 
       </ul>
      </div>
@@ -42,14 +41,34 @@
     </thead>
     <tbody>
      <tr>
-      <td class="None">Total</td>
-      <td class="None big">&nbsp;</td>
-      <td class="None small"><div align="right"></div></td>
-      <td class="None small"><div align="right">&nbsp;</div></td>
+      <td class="success">Total</td>
+      <td class="success big">       <div class="progress progress-success" style="width: 100px;">
+        <div class="bar" style="width: 100.00%;"></div>
+       </div>
+</td>
+      <td class="success small"><div align="right">100.00%</div></td>
+      <td class="success small"><div align="right">1&nbsp;/&nbsp;1</div></td>
       <td class="None big">&nbsp;</td>
       <td class="None small"><div align="right"></div></td>
       <td class="None small"><div align="right">&nbsp;</div></td>
       <td class="None small"><acronym title="Change Risk Anti-Patterns (CRAP) Index">CRAP</acronym></td>
+      <td class="None big">&nbsp;</td>
+      <td class="None small"><div align="right"></div></td>
+      <td class="None small"><div align="right">&nbsp;</div></td>
+     </tr>
+
+     <tr>
+      <td class="success">DoctrineAwareConsole</td>
+      <td class="success big">       <div class="progress progress-success" style="width: 100px;">
+        <div class="bar" style="width: 100.00%;"></div>
+       </div>
+</td>
+      <td class="success small"><div align="right">100.00%</div></td>
+      <td class="success small"><div align="right">1&nbsp;/&nbsp;1</div></td>
+      <td class="None big">&nbsp;</td>
+      <td class="None small"><div align="right"></div></td>
+      <td class="None small"><div align="right">&nbsp;</div></td>
+      <td class="None small">0</td>
       <td class="None big">&nbsp;</td>
       <td class="None small"><div align="right"></div></td>
       <td class="None small"><div align="right">&nbsp;</div></td>
@@ -62,25 +81,14 @@
     <tbody>
      <tr><td><div align="right"><a name="1"></a><a href="#1">1</a></div></td><td class="codeLine">&lt;?php</td></tr>
      <tr><td><div align="right"><a name="2"></a><a href="#2">2</a></div></td><td class="codeLine"></td></tr>
-     <tr><td><div align="right"><a name="3"></a><a href="#3">3</a></div></td><td class="codeLine">namespace ProG\Logger\Profiler;</td></tr>
+     <tr><td><div align="right"><a name="3"></a><a href="#3">3</a></div></td><td class="codeLine">namespace ProG\Logger;</td></tr>
      <tr><td><div align="right"><a name="4"></a><a href="#4">4</a></div></td><td class="codeLine"></td></tr>
-     <tr><td><div align="right"><a name="5"></a><a href="#5">5</a></div></td><td class="codeLine">interface ProfilerInterface</td></tr>
-     <tr><td><div align="right"><a name="6"></a><a href="#6">6</a></div></td><td class="codeLine">{</td></tr>
-     <tr><td><div align="right"><a name="7"></a><a href="#7">7</a></div></td><td class="codeLine">    /**</td></tr>
-     <tr><td><div align="right"><a name="8"></a><a href="#8">8</a></div></td><td class="codeLine">     * Append the profiler to a string of content (json/html)</td></tr>
-     <tr><td><div align="right"><a name="9"></a><a href="#9">9</a></div></td><td class="codeLine">     *</td></tr>
-     <tr><td><div align="right"><a name="10"></a><a href="#10">10</a></div></td><td class="codeLine">     * @param  string $content</td></tr>
-     <tr><td><div align="right"><a name="11"></a><a href="#11">11</a></div></td><td class="codeLine">     * @return \ProG\Logger\Profiler</td></tr>
-     <tr><td><div align="right"><a name="12"></a><a href="#12">12</a></div></td><td class="codeLine">     */</td></tr>
-     <tr><td><div align="right"><a name="13"></a><a href="#13">13</a></div></td><td class="codeLine">    public function appendTo($content);</td></tr>
-     <tr><td><div align="right"><a name="14"></a><a href="#14">14</a></div></td><td class="codeLine"></td></tr>
-     <tr><td><div align="right"><a name="15"></a><a href="#15">15</a></div></td><td class="codeLine">    /**</td></tr>
-     <tr><td><div align="right"><a name="16"></a><a href="#16">16</a></div></td><td class="codeLine">     * Return a new string of content with the profiling/debugging information</td></tr>
-     <tr><td><div align="right"><a name="17"></a><a href="#17">17</a></div></td><td class="codeLine">     *</td></tr>
-     <tr><td><div align="right"><a name="18"></a><a href="#18">18</a></div></td><td class="codeLine">     * @return string</td></tr>
-     <tr><td><div align="right"><a name="19"></a><a href="#19">19</a></div></td><td class="codeLine">     */</td></tr>
-     <tr><td><div align="right"><a name="20"></a><a href="#20">20</a></div></td><td class="codeLine">    public function render();</td></tr>
-     <tr><td><div align="right"><a name="21"></a><a href="#21">21</a></div></td><td class="codeLine">}</td></tr>
+     <tr><td><div align="right"><a name="5"></a><a href="#5">5</a></div></td><td class="codeLine">use Doctrine\DBAL\Logging\SQLLogger;</td></tr>
+     <tr><td><div align="right"><a name="6"></a><a href="#6">6</a></div></td><td class="codeLine"></td></tr>
+     <tr><td><div align="right"><a name="7"></a><a href="#7">7</a></div></td><td class="codeLine">class DoctrineAwareConsole extends Console implements SQLLogger</td></tr>
+     <tr><td><div align="right"><a name="8"></a><a href="#8">8</a></div></td><td class="codeLine">{</td></tr>
+     <tr><td><div align="right"><a name="9"></a><a href="#9">9</a></div></td><td class="codeLine"></td></tr>
+     <tr><td><div align="right"><a name="10"></a><a href="#10">10</a></div></td><td class="codeLine">}</td></tr>
 
     </tbody>
    </table>

@@ -4,9 +4,8 @@ namespace ProG\Logger;
 
 use PDO;
 use Psr\Log\LoggerInterface;
-use Doctrine\DBAL\Logging\SQLLogger;
 
-class Console implements SQLLogger
+class Console
 {
     /**
      * @var \Psr\Log\LoggerInterface

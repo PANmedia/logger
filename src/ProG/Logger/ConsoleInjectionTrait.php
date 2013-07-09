@@ -18,4 +18,14 @@ trait ConsoleInjectionTrait
     {
         $this->console = $console;
     }
+
+    /**
+     * Return the console object
+     * 
+     * @return \ProG\Logger\Console
+     */
+    public function getConsole()
+    {
+        return $this->console;
+    }
 }

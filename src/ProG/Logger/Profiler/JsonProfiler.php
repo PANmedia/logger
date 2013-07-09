@@ -45,6 +45,7 @@ class JsonProfiler implements ProfilerInterface
      */
     public function render()
     {
+        $json = [];
         $json['profiler'] = $this->console->getDebugData();
 
         return json_encode(
