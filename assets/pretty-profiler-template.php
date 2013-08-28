@@ -101,7 +101,15 @@
             <tr>
                 <td><?= strtoupper($global) ?></td>
                 <td><?= $key ?></td>
-                <td><?= $val ?></td>
+                <td>
+                    <?php if (is_array($val)) : ?>
+                        <?php foreach ($val as $value) : ?>
+                            <?= $value ?>
+                        <?php endforeach ?>
+                    <?php else : ?>
+                        <?= $val ?>
+                    <?php endif ?>
+                </td>
             </tr>
             <?php endforeach ?>
             <?php endforeach ?>
