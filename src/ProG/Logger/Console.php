@@ -148,7 +148,14 @@ class Console
      */
     public function getTimers()
     {
-        return $this->timers;
+        $starts = [];
+        foreach ($this->timers as $key => $v) $starts[$key] = $v['start'];
+        array_multisort($starts);
+
+        $sorted = [];
+        foreach ($starts as $k=>$v) $sorted[$k] = $this->timers[$k];
+
+        return $sorted;
     }
 
     /**
