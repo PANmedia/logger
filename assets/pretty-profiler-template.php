@@ -56,7 +56,14 @@
             <?php foreach ($values as $timer => $timerValues) : ?>
             <tr>
                 <td><?= $timer ?></td>
-                <td><?= $timerValues['time_seconds'] . ' seconds' ?></td>
+                <td>
+                    <?php
+                    $style = '';
+                    if ($timerValues['time_seconds'] > 0.3) { $style = 'color:orange;font-weight:bold'; }
+                    if ($timerValues['time_seconds'] > 0.7) { $style = 'color:red;font-weight:bold'; }
+                    ?>
+                    <span style="<?=$style?>;"><?= $timerValues['time_seconds'] . ' seconds' ?></span>
+                </td>
             </tr>
             <?php endforeach ?>
         </table>
