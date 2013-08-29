@@ -125,6 +125,23 @@ class Console
     }
 
     /**
+     * Set additional timers
+     *
+     * @param array $timers Array of timers
+     * @return \ProG\Logger\Console
+     */
+    public function setAdditionalTimers($timers = [])
+    {
+        foreach ($timers as $timer => $values) {
+            $time = $this->getReadableTime($values['start'], $values['stop']);
+            $timers[$timer]['time_seconds'] = $time;
+        }
+
+        $this->timers = array_merge($this->timers, $timers);
+        return $this;
+    }
+
+    /**
      * Return all timers
      * 
      * @return array
