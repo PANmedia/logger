@@ -13,6 +13,9 @@
                 <a href="#" class="prog-close-profiler">
                     <li class="nav" style="display: none">X</li>
                 </a>
+                <a href="#" class="prog-hide-profiler" title="Show/Hide Profiler">
+                    <li>&#8596;</li>
+                </a>
             </ul>
         </nav>
     </header>
@@ -127,7 +130,8 @@
 </section>
 
 <?php if ($jquery === true) : ?>
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<?php // Add jQuery if it's not already available from the parent app ?>
+<script>window.jQuery || document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"><\/script>')</script>
 <?php endif ?>
 <script>
 <?php include __DIR__ . '/profiler.js' ?>
