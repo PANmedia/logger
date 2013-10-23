@@ -18,14 +18,19 @@ prog.profiler = (function () {
          * @return {void}
          */
         css: function () {
+
+            //Get & apply local storage preference for show/hide panel
+            var PanelOffset = localStorage.getItem('panelView') ? '0%' : 'calc(-100% + 40px)';
+            $('#prog-profiler').css('left', PanelOffset);
+
             return this.heredoc(function () {/*
-#prog-profiler { position: fixed; bottom: 0; left: 0; color: #efefef; font-family: Verdana; font-size: 11px; width: 100%; z-index: 50000; }
-#prog-profiler header { text-align: left; font-weight: normal; background: #720913; padding: 10px; border-right: 1px solid #3c0505; border-bottom: 1px solid #3c0505; border-top: 1px solid #bb4b56; color: #fff; text-shadow: 1px 1px 0 #720914; }
+#prog-profiler { position: fixed; bottom: 0; color: #efefef; font-family: Verdana; font-size: 11px; width: 100%; z-index: 50000; }
+#prog-profiler header { position:relative; text-align: left; font-weight: normal; background: #720913; padding: 10px 40px 10px 10px; border-right: 1px solid #3c0505; border-bottom: 1px solid #3c0505; border-top: 1px solid #bb4b56; color: #fff;}
 #prog-profiler nav ul { list-style: none; padding: 0; margin: 0 }
 #prog-profiler nav li { display: inline-block; margin: 0 5px; }
 #prog-profiler nav li.logo { margin-left: 20px; margin-right: 20px; margin-top: 7px; }
-#prog-profiler nav li.nav { background: #3c0505; border-radius: 7px; display: inline-block; padding: 7px 10px; text-decoration: none; text-shadow: 0px 1px 0px #ab303c; }
-#prog-profiler nav li.nav:active { position: relative; top: 1px; }
+#prog-profiler nav li.nav { background: #3c0505; border-radius: 5px; display: inline-block; padding: 7px 10px; text-decoration: none;}
+#prog-profiler nav li.nav:active { background: #360404; }
 #prog-profiler nav a, #prog-profiler nav a:active, #prog-profiler nav a:visited, #prog-profiler nav a:hover { text-decoration: none; color: #efefef; }
 .prog-table-data { height: 500px; display: none; overflow: auto; background: #efefef; }
 .prog-table-data table { display: none; color: #222; font-family: Monaco, monospace; font-size: 11px; width: 100%; }
@@ -36,6 +41,7 @@ prog.profiler = (function () {
 .prog-table-data .query-memory { width: 10%; }
 .prog-table-data .query-params { width: 20%; }
 .prog-close-profiler li { display: none; float: right; }
+#prog-profiler .prog-hide-profiler li { display: block; position:absolute; width:40px; height:100%; margin:0; background-color:rgba(0,0,0,0.5); right:0; top:0; font-size: 30px; text-align: center; }
             */});
         },
         /**
@@ -56,8 +62,10 @@ prog.profiler = (function () {
          * @return {prog.profiler}
          */
         attachEvents: function () {
-            $('#prog-profiler nav').find('a').not('.prog-close-profiler').on('click', this.open);
-            $('#prog-profiler nav').find('.prog-close-profiler').on('click', this.close);
+            $('#prog-profiler nav').find('a').not('.prog-close-profiler, .prog-hide-profiler').on('click', this.open);
+            $('#prog-profiler nav').find('.prog-close-profiler').on('click', this.minimise);
+            $('#prog-profiler nav').find('.prog-hide-profiler').on('click', this.showhide);
+
             return this;
         },
         /**
@@ -70,28 +78,53 @@ prog.profiler = (function () {
             var target = $(evt.currentTarget);
             var table = '#prog-' + target.data('table') + '-table';
 
-            target.closest('#prog-profiler').find('.prog-table-data').slideDown(350).end()
-                                            .find('table').hide().end()
-                                            .find(table).show().end()
-                                            .find('.prog-close-profiler li').fadeIn(350);
+            $('#prog-profiler').find('.prog-table-data').slideDown(350).end()
+                                .find('table').hide().end()
+                                .find(table).show().end()
+                                .find('.prog-hide-profiler li').fadeOut(350).end()
+                                .find('.prog-close-profiler li').fadeIn(350);
 
             evt.preventDefault();
             evt.stopPropagation();
         },
         /**
-         * Close the profiler
+         * Minimise the profiler
          * 
          * @param  {object} evt
          * @return {void}
          */
-        close: function (evt) {
+        minimise: function (evt) {
             var target = $(evt.currentTarget);
-            target.closest('#prog-profiler').find('.prog-table-data').slideUp(350, function () {
-                target.closest('#prog-profiler').find('table').hide();
-            }).end().find('.prog-close-profiler li').fadeOut(350);
+            $('#prog-profiler').find('.prog-table-data').slideUp(350, function () {
+                                    $('#prog-profiler table').hide();
+                                }).end()
+                                 .find('.prog-close-profiler li').fadeOut(350).end()
+                                 .find('.prog-hide-profiler li').fadeIn(350);
 
             evt.preventDefault();
             evt.stopPropagation();
+        },
+        /**
+         * Slide profiler in to and out of view and store a preference
+         * 
+         * @param  {object} evt
+         * @return {void}
+         */
+        showhide: function (evt) {
+            
+            var panelWidth = $('#prog-profiler').width() - 40;
+
+            if ($('#prog-profiler').offset().left < 0) {
+                $('#prog-profiler').animate({ left: '0%', bottom:0}, 500 );
+                localStorage.setItem('panelView', true);
+            } else {
+                $('#prog-profiler').animate({ left: -Math.abs(panelWidth),}, 500 );
+                localStorage.removeItem('panelView');
+            }
+
+            evt.preventDefault();
+            evt.stopPropagation();
+
         }
     };
 })();
