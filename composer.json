@@ -1,11 +1,16 @@
 {
-    "name": "progmedia/logger",
+    "name": "pan/quick-profiler",
     "description": "A port of the old PHP Quick Profiler",
-    "keywords": ["profiling", "doctrine", "database", "debugging", "debug"],
+    "keywords": [
+        "profiling",
+        "doctrine",
+        "database",
+        "debugging",
+        "debug"
+    ],
     "license": "MIT",
     "require": {
-        "php": ">=5.4",
-        "monolog/monolog": "1.5.*"
+        "monolog/monolog": "~1.5"
     },
     "authors": [
         {
